@@ -1,0 +1,28 @@
+services:
+  user-ms:
+    environment:
+      - FLASK_APP=user-ms
+    ports:
+      - 7070:5000
+    container_name: user-ms
+    image: user-ms
+    build:
+      dockerfile: ../docker/dev.flask.Dockerfile
+      context: ../user-ms
+    volumes:
+      - ../user-ms/:/code
+
+  todo-ms:
+    environment:
+      - FLASK_APP=user-ms
+    ports:
+      - 7071:5000
+    container_name: todo-ms
+    image: todo-ms
+    build:
+      dockerfile: ../docker/dev.flask.Dockerfile
+      context: ../todo-ms
+    volumes:
+      - ../todo-ms/:/code
+
+
