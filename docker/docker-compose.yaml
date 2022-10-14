@@ -1,16 +1,33 @@
+#version: '3.8'
+x-xxx-common-services-config: &common-services-config
+  restart: always
+
+x-mongo-db-env: &mongo-db-env
+  MONGO_INITDB_ROOT_USERNAME: &mongo-db-user root
+  MONGO_INITDB_ROOT_PASSWORD: &mongo-db-password toor
+
+x-xxx-port-mapping:
+  webservices:
+  databases:
+    mongo-db-user: &mongo-db-user-ports
+      - 8081:27017
+
+volumes:
+  mongo-db:
+    
 services:
-  user-ms:
-    environment:
-      - FLASK_APP=user-ms
-    ports:
-      - 7070:5000
-    container_name: user-ms
-    image: user-ms
-    build:
-      dockerfile: ../docker/dev.flask.Dockerfile
-      context: ../user-ms
-    volumes:
-      - ../user-ms/:/code
+#  user-ms:
+#    environment:
+#      - FLASK_APP=user-ms
+#    ports:
+#      - 7070:5000
+#    container_name: user-ms
+#    image: user-ms
+#    build:
+#      dockerfile: ../docker/dev.flask.Dockerfile
+#      context: ../user-ms
+#    volumes:
+#      - ../user-ms/:/code
 
   todo-ms:
     environment:
@@ -25,4 +42,27 @@ services:
     volumes:
       - ../todo-ms/:/code
 
+  mongo-db:
+    <<: *common-services-config
+    environment: *mongo-db-env
+    ports: *mongo-db-user-ports
+    image: mongo
+    volumes:
+      - mongo-db:/data/db
 
+  mongo-express:
+    <<: *common-services-config
+    image: mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo-db
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+      - ME_CONFIG_MONGODB_AUTH_USERNAME=root
+      - ME_CONFIG_MONGODB_AUTH_PASSWORD=toor
+      - ME_CONFIG_BASICAUTH_USERNAME=root
+      - ME_CONFIG_BASICAUTH_PASSWORD=toor
+    depends_on:
+      - mongo-db
+    ports:
+      - "8088:8081"
