@@ -10,7 +10,7 @@ x-xxx-port-mapping:
   webservices:
   databases:
     mongo-db-user: &mongo-db-user-ports
-      - 8081:27017
+      - 27017:27017
 
 volumes:
   mongo-db:
