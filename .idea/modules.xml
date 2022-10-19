@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/docker-ms-examples.iml" filepath="$PROJECT_DIR$/docker-ms-examples.iml" />
-      <module fileurl="file://$PROJECT_DIR$/todo-ms/todo-ms.iml" filepath="$PROJECT_DIR$/todo-ms/todo-ms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orders/orders.iml" filepath="$PROJECT_DIR$/orders/orders.iml" />
       <module fileurl="file://$PROJECT_DIR$/user/user.iml" filepath="$PROJECT_DIR$/user/user.iml" />
     </modules>
   </component>
